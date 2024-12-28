@@ -27,17 +27,18 @@ class GptDataService {
                 const latestFile = path.join(this.folderPath, textFiles[0].file);
                 fs.readFile(latestFile, 'utf8', (readErr, data) => {
                     if (readErr) return reject(readErr);
-                    const startIndex = data.indexOf('You said:');
-                    if (startIndex !== -1) {
-                        // Extract content starting from "you said:"
-                        const contentAfterYouSaid = data.slice(startIndex);
-                        console.log('Extracted Content:');
-                        console.log(contentAfterYouSaid.trim());
-                        resolve(contentAfterYouSaid)
-                    } else {
-                        console.log('"you said:" not found in the file.');
-                        resolve('')
-                    }
+                    // const startIndex = data.indexOf('You said:');
+                    resolve(data)
+                    // if (startIndex !== -1) {
+                    //     // Extract content starting from "you said:"
+                    //     const contentAfterYouSaid = data.slice(startIndex);
+                    //     console.log('Extracted Content:');
+                    //     console.log(contentAfterYouSaid.trim());
+                        
+                    // } else {
+                    //     console.log('"you said:" not found in the file.');
+                    //     resolve('')
+                    // }
                     // resolve('');
                 });
             });
