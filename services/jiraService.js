@@ -133,13 +133,13 @@ async processIssues() {
       console.log(`Found ${issues.length} issues.`);
 
     issues.forEach(async (issue, index) => {
-        console.log(`the issue summary is: ${issue.fields.summary} - id is: ${issue.id} key is: ${issue.key}`);
+        console.log(`the issue summary is: ${issue.fields.summary} - id is: ${issue.id} key is: ${issue.key} the assignee is: ${issue.fields.assignee}`);
         console.log()
           console.log(`${index + 1}: ${issue.key} - ${issue.fields.summary} - ${issue.fields.status.name}`);
       });
 
     return issues.map(issue => {
-        return ` issue summary: ${issue.fields.summary}`
+        return ` issue summary: ${issue.fields.summary} - id is: ${issue.id} key is: ${issue.key} the assignee is: ${issue.fields.assignee? issue.fields.assignee.displayName : "issue has no assignee"} the creator: ${issue.fields.creator.displayName}`
     })
 
   } catch (error) {
