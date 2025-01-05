@@ -6,7 +6,7 @@ import JiraService from './services/jiraService.js';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
-
+import { createMakeScenario, executeMakeScenario, processGithubScenarios } from './services/makeService.js';
 
 dotenv.config();
 async function getGitHubData() {
@@ -75,6 +75,7 @@ async function getGitHubData() {
      let gitHubData = await getGitHubData();
      let gptData = await getGptData();
      let jiraData = await getJiraData();
+    //  let makeData = await processGithubScenarios();
 
      outputDataObject["gitHubData"] = gitHubData
      outputDataObject["gptData"] = gptData
@@ -111,4 +112,11 @@ app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
+
+// (async () => {
+//   const githubApiKeys = ["key1", "key2", "key3"]; // Replace with actual keys
+//   const getNextGithubApiKey = () => githubApiKeys.shift(); // Example implementation
+
+//   await processGithubScenarios();
+// })();
  
