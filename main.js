@@ -23,14 +23,19 @@ async function getGitHubData() {
   
     try {
       // Call the getLastCommit function
-      const commitData = await gitHubService.getLastCommit(owner, repo, branch);
-      console.log("the commitData is: ")
-      console.log(commitData)
+
+      let commitListData = await gitHubService.getAllCommitsData(owner, repo, branch);
+      // console.log("the commitListData is: ");
+      // console.log(commitListData)
+
+      // const commitData = await gitHubService.getLastCommit(owner, repo, branch);
+      // console.log("the commitData is: ")
+      // console.log(commitData)
   
-      const commitChanges = await gitHubService.getCommitChanges(owner, repo, commitData)
-      console.log("the commitChanges are: ")
-      console.log(commitChanges)
-      return commitChanges
+      // const commitChanges = await gitHubService.getCommitChanges(owner, repo, commitData)
+      // console.log("the commitChanges are: ")
+      // console.log(commitChanges)
+      return commitListData
 
     } catch (error) {
       console.error('Error fetching the last commit:', error);
@@ -73,13 +78,13 @@ async function getGitHubData() {
   async function createGptData() {
     let outputDataObject = {}
      let gitHubData = await getGitHubData();
-     let gptData = await getGptData();
-     let jiraData = await getJiraData();
+    //  let gptData = await getGptData();
+    //  let jiraData = await getJiraData();
     //  let makeData = await processGithubScenarios();
 
      outputDataObject["gitHubData"] = gitHubData
-     outputDataObject["gptData"] = gptData
-     outputDataObject["jiraData"] = jiraData
+    //  outputDataObject["gptData"] = gptData
+    //  outputDataObject["jiraData"] = jiraData
      console.log("the outputDataObject is: ")
      console.log(outputDataObject)
      return outputDataObject;
