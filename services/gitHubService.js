@@ -69,6 +69,14 @@ async getCommitList(owner, repo, branch = "master", perPage = 10) {
     // const defaultBranch = repoDetails.default_branch;
     const defaultBranch = branch
 
+    const { data: branches } = await this.octokit.rest.repos.listBranches({
+      owner,
+      repo,
+      per_page: 100, // Fetch up to 100 branches per page
+    });
+
+    console.log("Branches:", branches);
+
     // Fetch the latest commit on the default branch
     const { data: commits } = await this.octokit.rest.repos.listCommits({
       owner,
@@ -124,17 +132,26 @@ async getLastCommitData(owner, repo, branch) {
 async getAllCommitsData(owner, repo, branch) {
   // let lastCommit = getLastCommit(owner, repo, branch)
   let commitList = await this.getCommitList(owner, repo)
-  console.log("the commit list in getAllCommitsData is: ")
+  // console.log("the commit list in getAllCommitsData is: ")
+  // console.log(commitList)
+  console.log("the commit list is: ")
   console.log(commitList)
-  
   const commitListChanges = await Promise.all(
     commitList.map(async (commit) => {
+      console.log("the commit data is: ", commit.commit.author, " committer: ", commit.commit.committer)
       const commitData = await this.getCommitChanges(owner, repo, commit);
+      // console.log("the commitdata is: ")
+      // console.log(commitData)
       return { commit_date: commit.commit.committer.date, commit_sha: commit.sha, commit_data: commitData };
     })
   );
 
   commitListChanges.sort((a, b) => new Date(a.commit_date) - new Date(b.commit_date));
+  // console.log("the commit list changes are: ")
+  // console.log(commitListChanges)
+  // commitListChanges.forEach(commit => {
+  //   console.log("the author is: ", commit.commit.author, " the commiter is: ", commit.commit_data,)
+  // })
   return commitListChanges
 }
 
