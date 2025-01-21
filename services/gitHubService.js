@@ -41,7 +41,7 @@ async getLastCommit(owner, repo, branch = 'master') {
 
     // const defaultBranch = repoDetails.default_branch;
     const defaultBranch = branch
-
+    // changed
     // Fetch the latest commit on the default branch
     const { data: commits } = await this.octokit.rest.repos.listCommits({
       owner,
