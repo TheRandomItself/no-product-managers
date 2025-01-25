@@ -21,6 +21,7 @@ GITHUB_WANTED_BRANCH='[the branch you want to check for example: master]'
 
 GITHUB_REPO='[name of the github repository]'
 
+GITHUB_EMAIL = '[the email of the user]'
 
 GPT_DATA_FOLDER='[the folder of the chatgpt extension files]'
 

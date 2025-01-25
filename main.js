@@ -19,12 +19,16 @@ async function getGitHubData() {
 
     const owner = process.env.GITHUB_OWNER; // Replace with the GitHub repository owner
     const repo = process.env.GITHUB_REPO;        // Replace with the repository name
+    const email = process.env.GITHUB_EMAIL
     const branch = wantedBranch;                // Replace with the branch name if needed (default: 'main')
   
     try {
       // Call the getLastCommit function
 
-      let commitListData = await gitHubService.getAllCommitsData(owner, repo, branch);
+      let commitListData = await gitHubService.getAllCommitsData(owner, repo);
+      let commitListDataByUser = await gitHubService.getAllUserCommitsDataBetweenTimes(owner, repo, email)
+      console.log('the commitListDataByUser is: ')
+      console.log(commitListDataByUser)
       // console.log("the commitListData is: ");
       // console.log(commitListData)
 
@@ -35,7 +39,8 @@ async function getGitHubData() {
       // const commitChanges = await gitHubService.getCommitChanges(owner, repo, commitData)
       // console.log("the commitChanges are: ")
       // console.log(commitChanges)
-      return commitListData
+      // return commitListData
+      return commitListDataByUser
 
     } catch (error) {
       console.error('Error fetching the last commit:', error);
@@ -48,8 +53,8 @@ async function getGitHubData() {
   
     try {
       const lastGptFileData = await gptDataService.getLatestFile();
-      console.log("the lastGprtFiileData is: ")
-      console.log(lastGptFileData)
+      // console.log("the lastGprtFiileData is: ")
+      // console.log(lastGptFileData)
       // Call the getLastCommit function
       return lastGptFileData
 
@@ -59,14 +64,14 @@ async function getGitHubData() {
   }
 
   async function getJiraData() {
-    console.log("entered getJiraData function")
+    // console.log("entered getJiraData function")
     // Create an instance of gptDataService
     const jiraService = new JiraService();
   
     try {
       const issuesData = await jiraService.processIssues();
-      console.log("the issuesData is: ")
-      console.log(issuesData)
+      // console.log("the issuesData is: ")
+      // console.log(issuesData)
       // Call the getLastCommit function
       return issuesData
 
@@ -85,8 +90,9 @@ async function getGitHubData() {
      outputDataObject["gitHubData"] = gitHubData
     //  outputDataObject["gptData"] = gptData
     //  outputDataObject["jiraData"] = jiraData
-     console.log("the outputDataObject is: ")
-     console.log(outputDataObject)
+    //  console.log("the outputDataObject is: ")
+    //  console.log(outputDataObject)
+
      return outputDataObject;
   }
   // Run the main function
@@ -102,7 +108,7 @@ app.get('/api/createGptData', async (req, res) => {
 
         // Save the response to a file
         const filePath = path.join(gptDataOutputPath, `gptData_${Date.now()}.json`);
-        console.log("the filePath is: ", filePath)
+        // console.log("the filePath is: ", filePath)
         fs.writeFileSync(filePath, JSON.stringify(responseData, null, 2), 'utf8');
 
         res.json(responseData);

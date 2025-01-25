@@ -23,7 +23,7 @@ export async function getMakeScenarios(){
           },
         });
     
-        console.log(`got scenario: ${response.data}`);
+        // console.log(`got scenario: ${response.data}`);
         return response.data;
       } catch (error) {
         console.error('Error creating scenario:', error.message);
@@ -53,7 +53,7 @@ export async function createMakeScenario(name, githubApiKey) {
         },
       });
   
-      console.log(`Scenario Created: ${response.data.id}`);
+      // console.log(`Scenario Created: ${response.data.id}`);
       return response.data;
     } catch (error) {
       console.error('Error creating scenario:', error.message);
@@ -69,7 +69,7 @@ export async function createMakeScenario(name, githubApiKey) {
         },
       });
   
-      console.log('Scenario Executed:', response.data);
+      // console.log('Scenario Executed:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error executing scenario:', error.message);
@@ -98,11 +98,11 @@ export async function createMakeScenario(name, githubApiKey) {
 //   })();
 
   export async function processGithubScenarios(pauseDuration = 5000) {
-    console.log('entered processGithubScenarios')
+    // console.log('entered processGithubScenarios')
     const apiKey = getNextGithubApiKey();
 
     await getMakeScenarios()
-    console.log(`Using GitHub API Key: ${apiKey}`);
+    // console.log(`Using GitHub API Key: ${apiKey}`);
 
     // const getScenatio = await getMakeScenatio()
     // Create a new scenario
@@ -111,7 +111,7 @@ export async function createMakeScenario(name, githubApiKey) {
     // Execute the scenario
     const execution = await executeMakeScenario(scenario.id);
 
-    console.log(`Scenario ${i + 1} Execution Result:`, execution);
+    // console.log(`Scenario ${i + 1} Execution Result:`, execution);
 
     // Optional: Pause between executions to avoid rate limits
     await new Promise(resolve => setTimeout(resolve, pauseDuration));

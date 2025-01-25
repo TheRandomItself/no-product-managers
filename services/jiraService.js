@@ -12,11 +12,11 @@ constructor(){
     this.baseUrl = process.env.JIRA_BASE_URL
     this.email = process.env.JIRA_EMAIL;
     this.apiToken = process.env.JIRA_API_TOKEN;
-    console.log("the jira api token is: ", this.apiToken);
+    // console.log("the jira api token is: ", this.apiToken);
 }
 // Function to fetch issues
 async getIssues() {
-    console.log("entered getIssues in jiraService")
+    // console.log("entered getIssues in jiraService")
     const url = `${this.baseUrl}/rest/api/3/search`;
 
     try {
@@ -59,12 +59,12 @@ getCommitsForIssue = async (issueId) => {
       for (const detail of details) {
           const repositories = detail.repositories || [];
           for (const repo of repositories) {
-              console.log(`Repository: ${repo.name}`);
+            //   console.log(`Repository: ${repo.name}`);
               for (const commit of repo.commits) {
-                  console.log(`Commit ID: ${commit.id}`);
-                  console.log(`Message: ${commit.message}`);
-                  console.log(`Author: ${commit.author.name}`);
-                  console.log(`commit branch: ${commit.branch}`);
+                //   console.log(`Commit ID: ${commit.id}`);
+                //   console.log(`Message: ${commit.message}`);
+                //   console.log(`Author: ${commit.author.name}`);
+                //   console.log(`commit branch: ${commit.branch}`);
               }
           }
       }
@@ -97,24 +97,24 @@ getCommitsAndBranchesForIssue = async (issueId) => {
       for (const detail of details) {
           const repositories = detail.repositories || [];
           for (const repo of repositories) {
-              console.log(`Repository: ${repo.name}`);
+            //   console.log(`Repository: ${repo.name}`);
 
               // Display branch details
               if (repo.branches && repo.branches.length > 0) {
-                  console.log('Branches:');
+                //   console.log('Branches:');
                   for (const branch of repo.branches) {
-                      console.log(`  - Branch Name: ${branch.name}`);
-                      console.log(`    Last Commit ID: ${branch.lastCommit || 'N/A'}`);
+                    //   console.log(`  - Branch Name: ${branch.name}`);
+                    //   console.log(`    Last Commit ID: ${branch.lastCommit || 'N/A'}`);
                   }
               }
 
               // Display commit details
               if (repo.commits && repo.commits.length > 0) {
-                  console.log('Commits:');
+                //   console.log('Commits:');
                   for (const commit of repo.commits) {
-                      console.log(`  - Commit ID: ${commit.id}`);
-                      console.log(`    Message: ${commit.message}`);
-                      console.log(`    Author: ${commit.author.name}`);
+                    //   console.log(`  - Commit ID: ${commit.id}`);
+                    //   console.log(`    Message: ${commit.message}`);
+                    //   console.log(`    Author: ${commit.author.name}`);
                   }
               }
           }
@@ -130,12 +130,12 @@ async processIssues() {
       const issues = data.issues;
 
       // Process the issues
-      console.log(`Found ${issues.length} issues.`);
+    //   console.log(`Found ${issues.length} issues.`);
 
     issues.forEach(async (issue, index) => {
-        console.log(`the issue summary is: ${issue.fields.summary} - id is: ${issue.id} key is: ${issue.key} the assignee is: ${issue.fields.assignee}`);
-        console.log()
-          console.log(`${index + 1}: ${issue.key} - ${issue.fields.summary} - ${issue.fields.status.name}`);
+        // console.log(`the issue summary is: ${issue.fields.summary} - id is: ${issue.id} key is: ${issue.key} the assignee is: ${issue.fields.assignee}`);
+        // console.log()
+        //   console.log(`${index + 1}: ${issue.key} - ${issue.fields.summary} - ${issue.fields.status.name}`);
       });
 
     return issues.map(issue => {
