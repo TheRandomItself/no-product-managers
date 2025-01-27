@@ -3,6 +3,7 @@ import express from 'express';
 import GitHubService from './services/gitHubService.js'; // Adjust the path accordingly
 import GptDataService from './services/gptDataService.js';
 import JiraService from './services/jiraService.js';
+import { Client } from '@notionhq/client';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -81,13 +82,26 @@ async function getGitHubData() {
   }
   
   async function createGptData() {
+    const notion = new Client({ auth: process.env.NOTION_API_KEY });
+    const databaseId = '155cdf31bd9a8024a3aecd4b294660c6';
+    const response = await notion.databases.query({ database_id: databaseId });
+
+    // Extract and format the data for the console
+    const tableData = response.results.map((page) => ({
+      TaskName: page.properties.Name?.title[0]?.text?.content || 'No Name',
+      Priority: page.properties.Priority?.select?.name || 'No Priority',
+      Status: page.properties.Status?.select?.name || 'No Status',
+    }));
+
+    // Log the data in a table format
+    console.table(tableData);
     let outputDataObject = {}
-     let gitHubData = await getGitHubData();
+    //  let gitHubData = await getGitHubData();
     //  let gptData = await getGptData();
     //  let jiraData = await getJiraData();
     //  let makeData = await processGithubScenarios();
 
-     outputDataObject["gitHubData"] = gitHubData
+    //  outputDataObject["gitHubData"] = gitHubData
     //  outputDataObject["gptData"] = gptData
     //  outputDataObject["jiraData"] = jiraData
     //  console.log("the outputDataObject is: ")
