@@ -1,10 +1,5 @@
-// const express = require('express');
-// const https = require('https');
-// const axios = require('axios');
 import { Octokit } from "@octokit/rest";
 import axios from 'axios';
-// const { Octokit } = require("@octokit/rest");
-
 import dotenv from 'dotenv';
 
 class gitHubService {
@@ -186,16 +181,9 @@ async getAllCommitsData(owner, repo) {
   let allCommitList = []
   for (const branch of branches) {  
   let commitList = await this.getCommitList(owner, repo, branch.name)
-  // console.log("the commit list in getAllCommitsData is: ")
-  // console.log(commitList)
-  // console.log("the commit list is: ")
-  // console.log(commitList)
   let commitListChanges = await Promise.all(
     commitList.map(async (commit) => {
       const commitData = await this.getCommitChanges(owner, repo, commit);
-      // console.log("the commit data is: ", commit.commit.author, " committer: ", commit.commit.committer, " and commit data is: ", commitData, " and the branch is: ", branch.name)
-      // console.log("the commit data is: ", commit.commit.author, " committer: ", commit.commit.committer, " and the branch is: ", branch.name)
-
       return { commit_date: commit.commit.committer.date, commit_sha: commit.sha, commit_data: commitData, branch_name: branch.name, committer: commit.commit.committer.email };
     })
   );
